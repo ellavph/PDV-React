@@ -10,7 +10,7 @@ const App: React.FC = () => {
       <div className="App bg-white">
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          <Route path="/checkout/home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           {/* Adicione outras rotas conforme necessário */}
         </Routes>
       </div>
