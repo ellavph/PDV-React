@@ -1,7 +1,7 @@
 import React, { useState, useEffect  } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import { LoaderAnimation, LoginAnimation } from '../../../assets/lottie/LottieAnimation';
-import authService from '../services/auth';
+import { authApiService } from '../services/auth';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
 
       setLoading(true); // Ativa o loader
 
-      const token = await authService.login({ email, password });
+      const token = await authApiService.login({ email, password });
       if (token) {
         console.log('Login bem-sucedido! Token:', token);
         localStorage.setItem('token', token);

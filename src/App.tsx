@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './modules/authentication/components/LoginForm';
-import Home from './modules/checkout/pages/home';
+import HomePDV from './modules/checkout/pages/home';
 
 const App: React.FC = () => {
 
@@ -10,7 +10,8 @@ const App: React.FC = () => {
       <div className="App bg-white">
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/home" element={<HomePDV />} /> {/* Corrigido para <HomePDV /> */}
           {/* Adicione outras rotas conforme necessário */}
         </Routes>
       </div>

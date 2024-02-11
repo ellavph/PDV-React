@@ -13,7 +13,7 @@ interface AuthResponse {
   };
 }
 
-const authApiService = {
+export const authApiService = {
   login: async (credentials: Credentials): Promise<string | null> => {
     try {
       const response = await axios.post<AuthResponse>(process.env.REACT_APP_BACKEND_URL + 'user/login', credentials);
@@ -37,4 +37,8 @@ const authApiService = {
   },
 };
 
-export default authApiService;
+export const isAuthenticated = () => {
+  // Lógica para verificar se o token de autenticação está presente
+  const token = localStorage.getItem('token'); // Supondo que o token esteja armazenado no localStorage
+  return !!token; // Retorna true se o token existir, caso contrário, retorna false
+};

@@ -50,15 +50,12 @@ const HomePDV: React.FC<HomePDVProps> = () => {
   // Renderiza o componente com os dados buscados da API se o estado de loading for false, caso contrário, exibe o componente de animação de carregamento
   return (
     <div className="grid grid-cols-12 h-screen">
+      <div className="col-span-1 h-full bg-gray-700">
         <SidebarMenu /> {/* Adicione a barra lateral aqui */}
+      </div>
       <div className="col-span-11 py-4">
         {loading ? (
-          <div className="flex justify-center items-center h-full">
-            <div className="text-center">
-              <LoaderAnimation /> {/* Renderize o componente de animação de carregamento */}
-              <p className="text-gray-600 mt-2">Carregando...</p>
-            </div>
-          </div>
+          <LoaderAnimation /> // Renderiza o componente de animação de carregamento enquanto os dados estão sendo buscados
         ) : (
           <div>
             <h1 className="text-2xl font-bold mb-4">Lista de Pedidos</h1>
