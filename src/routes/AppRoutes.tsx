@@ -1,18 +1,18 @@
+// AppRoutes.tsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importe Route aqui
-import ProtectedRoute from './ProtectedRoute';
-import LoginForm from '../modules/authentication/components/LoginForm';;
+import { Routes, Route } from 'react-router-dom';
 import HomePDV from '../modules/checkout/pages/home';
+import LoginForm from '../modules/authentication/components/LoginForm';
+import NotFoundPage from '../shared/components/notfound/NotFoundPage';
 
 const AppRoutes: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <ProtectedRoute path="/home" element={<HomePDV />} />
-        {/* Adicione outras rotas protegidas conforme necessário */}
-        <Route path="/login" element={<LoginForm />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<HomePDV />} />
+      {/* Rotas publicas abaixo */}
+      <Route path="/login" element={<LoginForm />} /> 
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 };
 

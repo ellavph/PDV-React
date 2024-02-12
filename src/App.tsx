@@ -1,22 +1,19 @@
+
+
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './routes/ProtectedRoute';
 import LoginForm from './modules/authentication/components/LoginForm';
 import HomePDV from './modules/checkout/pages/home';
 
-const App: React.FC = () => {
+import AppRoutes from './routes/AppRoutes';
 
+const App: React.FC = () => {
   return (
     <Router>
-      <div className="App bg-white">
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/home" element={<HomePDV />} /> {/* Corrigido para <HomePDV /> */}
-          {/* Adicione outras rotas conforme necessário */}
-        </Routes>
-      </div>
+      <AppRoutes />
     </Router>
   );
-}
+};
 
 export default App;

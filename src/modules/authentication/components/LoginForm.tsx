@@ -13,7 +13,7 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/home'); 
+      navigate('/'); 
     }
   }, [navigate]);
 
@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
       if (token) {
         console.log('Login bem-sucedido! Token:', token);
         localStorage.setItem('token', token);
-        navigate('/home'); 
+        navigate('/'); 
       } else {
         console.log('Falha no login. Verifique suas credenciais.');
       }

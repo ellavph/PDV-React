@@ -1,4 +1,6 @@
-// authApiService.ts
+
+import jwt_decode, { JwtPayload } from 'jwt-decode';
+
 import axios from 'axios';
 
 interface Credentials {
@@ -37,8 +39,26 @@ export const authApiService = {
   },
 };
 
-export const isAuthenticated = () => {
-  // Lógica para verificar se o token de autenticação está presente
-  const token = localStorage.getItem('token'); // Supondo que o token esteja armazenado no localStorage
-  return !!token; // Retorna true se o token existir, caso contrário, retorna false
+
+export const isAuthenticated = (): boolean => {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return false; // Se o token não está presente, o usuário não está autenticado
+  }
+
+  try {
+    // Decodifica o token JWT
+    const decodedToken = JSON.parse(atob(token.split('.')[1])) as JwtPayload;
+    
+    // Verifica se a data de expiração do token está definida e se não está no passado
+    if (decodedToken.exp !== undefined && decodedToken.exp * 1000 < Date.now()) {
+      return false; // Token expirado
+    }
+    
+    return true; // Token válido
+  } catch (error) {
+    console.error('Erro ao decodificar o token:', error);
+    return false; // Retorna false se houver um erro ao decodificar o token
+  }
 };

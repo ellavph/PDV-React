@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { ApiResponse } from '../../../shared/interfaces/ApiResponse';
 import { Order } from '../../../shared/interfaces/Order';
-import { MenuItem } from '../../../shared/interfaces/MenuItem';
 import { LoaderAnimation } from '../../../assets/lottie/LottieAnimation';
 import SidebarMenu from '../../../shared/components/sidebar/SideBarMenu';
 import { useNavigate } from 'react-router-dom';
+import { orderApiService } from '../services/fetchOrders';
+import OrderTable from '../../../shared/components/table/ordersTable';
 
-interface HomePDVProps {
-  // Defina as propriedades necessárias
-}
-
-const HomePDV: React.FC<HomePDVProps> = () => {
+const HomePDV: React.FC = () => {
   const navigate = useNavigate(); // Obtenha a função de navegação
   const [orders, setOrders] = useState<Order[]>([]);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,20 +18,12 @@ const HomePDV: React.FC<HomePDVProps> = () => {
         navigate('/login');
       } else {
         try {
-          const response = await axios.get<ApiResponse<Order[]>>(process.env.REACT_APP_BACKEND_URL + 'checkout/orders', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          if (response.data.success) {
-            setOrders(response.data.data);
-          } else {
-            localStorage.removeItem('token');
-            navigate('/login');
-          }
+          const fetchedOrders = await orderApiService.fetchOrders(token);
+          setOrders(fetchedOrders);
         } catch (error) {
-          console.error('Erro ao verificar o token:', error);
-          // Adicione tratamento de erro adequado aqui
+          console.error('Erro ao buscar os pedidos:', error);
+          localStorage.removeItem('token');
+          navigate('/login');
         } finally {
           setLoading(false);
         }
@@ -45,12 +31,12 @@ const HomePDV: React.FC<HomePDVProps> = () => {
     };
   
     checkAuth();
-  }, []);
+  }, [navigate]);
 
   // Renderiza o componente com os dados buscados da API se o estado de loading for false, caso contrário, exibe o componente de animação de carregamento
   return (
     <div className="grid grid-cols-12 h-screen">
-        <SidebarMenu /> {/* Adicione a barra lateral aqui */}
+      <SidebarMenu /> {/* Adicione a barra lateral aqui */}
       <div className="col-span-11 py-4">
         {loading ? (
           <div className="flex justify-center items-center h-full">
@@ -62,13 +48,7 @@ const HomePDV: React.FC<HomePDVProps> = () => {
         ) : (
           <div>
             <h1 className="text-2xl font-bold mb-4">Lista de Pedidos</h1>
-            <ul>
-              {orders.map(order => (
-                <li key={order.id} className="border border-gray-200 p-4 mb-2 rounded-md">
-                  {/* Renderize as informações de cada pedido aqui */}
-                </li>
-              ))}
-            </ul>
+            <OrderTable orders={orders} />
           </div>
         )}
       </div>
