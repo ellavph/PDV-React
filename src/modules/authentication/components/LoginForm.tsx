@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       {loading ? (
         // Mostra o loader se a autenticação estiver em andamento
         <LoaderAnimation />
