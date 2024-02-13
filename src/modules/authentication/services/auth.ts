@@ -1,5 +1,5 @@
 
-import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { JwtPayload } from 'jwt-decode';
 
 import axios from 'axios';
 

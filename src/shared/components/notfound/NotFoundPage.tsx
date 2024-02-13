@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SidebarMenu from '../../../shared/components/sidebar/SideBarMenu';
-import { LoaderAnimation } from '../../../assets/lottie/LottieAnimation';
 
 const NotFoundPage: React.FC = () => {
   return (

@@ -10,6 +10,7 @@ const HomePDV: React.FC = () => {
   const navigate = useNavigate(); // Obtenha a função de navegação
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false); // Estado para controlar se o usuário está autenticado ou não
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -20,6 +21,7 @@ const HomePDV: React.FC = () => {
         try {
           const fetchedOrders = await orderApiService.fetchOrders(token);
           setOrders(fetchedOrders);
+          setAuthenticated(true); // Define o estado autenticado como verdadeiro se a verificação de autenticação for bem-sucedida
         } catch (error) {
           console.error('Erro ao buscar os pedidos:', error);
           localStorage.removeItem('token');
@@ -33,21 +35,18 @@ const HomePDV: React.FC = () => {
     checkAuth();
   }, [navigate]);
 
-  // Renderiza o componente com os dados buscados da API se o estado de loading for false, caso contrário, exibe o componente de animação de carregamento
+  // Renderiza o componente com os dados buscados da API se o estado de loading for false e o usuário estiver autenticado
   return (
-    <div className="grid grid-cols-12 h-screen">
+    <div className="grid grid-cols-12 h-screen bg-gray-200">
       <SidebarMenu /> {/* Adicione a barra lateral aqui */}
-      <div className="col-span-11 py-4">
-        {loading ? (
-          <div className="flex justify-center items-center h-full">
-            <div className="text-center">
-              <LoaderAnimation /> {/* Renderize o componente de animação de carregamento */}
-              <p className="text-gray-600 mt-2">Carregando...</p>
-            </div>
+      <div className="col-start-1 col-span-12 md:col-start-2 md:col-span-11 flex justify-center items-center py-4 px-4 w-full">
+        {loading || !authenticated ? ( // Verifica se o usuário está autenticado antes de renderizar a página
+          <div className="text-center">
+            <LoaderAnimation />
+            <p className="text-gray-600 mt-2">Carregando...</p>
           </div>
         ) : (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Lista de Pedidos</h1>
+          <div className="w-full max-w-screen-2xl mx-auto">
             <OrderTable orders={orders} />
           </div>
         )}
