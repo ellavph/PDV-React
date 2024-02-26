@@ -4,7 +4,7 @@ import { LoaderAnimation } from '../../../assets/lottie/LottieAnimation';
 import SidebarMenu from '../../../shared/components/sidebar/SideBarMenu';
 import { useNavigate } from 'react-router-dom';
 import { orderApiService } from '../services/fetchOrders';
-import OrderTable from '../../../shared/components/table/ordersTable';
+import Ordertables from '../../../shared/components/table/tableOrders';
 
 const HomePDV: React.FC = () => {
   const navigate = useNavigate(); // Obtenha a função de navegação
@@ -47,7 +47,7 @@ const HomePDV: React.FC = () => {
           </div>
         ) : (
           <div className="w-full max-w-screen-2xl mx-auto">
-            <OrderTable orders={orders} />
+            <Ordertables orders={orders} />
           </div>
         )}
       </div>
