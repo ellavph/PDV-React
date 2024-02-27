@@ -1,6 +1,7 @@
 import { Order } from "../../interfaces/Order";
 import { ColumnDef } from "@tanstack/react-table";
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import DateTimeFormatter from "../../../utils/convertData";
 
 const handleEditOrder = (orderId: number) => {
     console.log(`Editar pedido com ID ${orderId}`);
@@ -11,24 +12,46 @@ const handleEditOrder = (orderId: number) => {
   };
 
 
-export const columns: ColumnDef<Order>[] = [
-    { accessorKey: "id", header: "ID", },
-    { accessorKey: "createdAt", header: "Hora", },
-    { accessorKey: "customer", header: "Cliente", },
-    { accessorKey: "status", header: "Status", },
+  export const columns: ColumnDef<Order>[] = [
+    { 
+      accessorKey: "id", 
+      header: () => <div className="text-gray-800 font-bold text-center">ID</div>, 
+      cell: ({ row }) => <div className="w-16 mx-auto text-center">{row?.id}</div>
+    },
+    { 
+      accessorKey: "createdAt", 
+      header: () => <div className="text-gray-800 font-bold text-center">Hora Pedido</div>, 
+      cell: ({ row }) => <div className="text-center"><DateTimeFormatter isoDateTime={String(row?.original?.createdAt)} /></div>
+    },
+    { 
+      accessorKey: "customer", 
+      header: () => <div className="text-gray-800 font-bold text-center">Cliente</div>, 
+      cell: ({ row }) => <div className="text-center">José</div>
+    },
+    { 
+      accessorKey: "status", 
+      header: () => <div className="text-gray-800 font-bold text-center">Status</div>, 
+      cell: ({ row }) => <div className="text-center">Pago</div>
+    },
     {
       id: "actions",
+      header: () => (
+        <div className="flex items-center justify-center">
+          <div className="text-gray-800 font-bold">Ações</div>
+        </div>
+      ),
       enableSorting: false,
       enableHiding: false,
       cell: ({ row }) => (
         <div className='text-center'>
-          <button onClick={() => handleEditOrder(row.original.id)} className='text-gray-500 focus:outline-none mr-2 hover:text-gray-600'>
+          <button onClick={() => handleEditOrder(row?.original?.id)} className='text-gray-500 focus:outline-none mr-2 hover:text-gray-600'>
             <FaEdit className='w-4 h-4' />
           </button>
-          <button onClick={() => handleDeleteOrder(row.original.id)} className='text-gray-500 focus:outline-none hover:text-gray-600'>
+          <button onClick={() => handleDeleteOrder(row?.original?.id)} className='text-gray-500 focus:outline-none hover:text-gray-600'>
             <FaTrash className='w-4 h-4' />
           </button>
         </div>
       ),
     },
   ];
+  
