@@ -18,6 +18,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
+import { ModalPedido } from '../modal/productModal'
+
+
 import { LoaderAnimation } from '../../../assets/lottie/LottieAnimation';
 
 
@@ -27,6 +31,15 @@ interface OrderTableProps {
 
 const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
 
+  const [ModalAberta, setModalAberta] = useState(false);
+
+  const abrirModalPedido = () => {
+    setModalAberta(true);
+  };
+
+  const fecharModalPedido = () => {
+    setModalAberta(false);
+  };
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -67,19 +80,20 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
               className="max-w-sm"
             />
 
-            <div className="w-full flex justify-end items-center mt-4 md:mt-0 md:mr-4 space-x-2">
-              <div className="hidden sm:flex flex-grow justify-end pr-4">
-                <Button size="lg">
-                  <FaPlusCircle className='w-4 h-4 mr-2' />
-                  <span className="hidden md:inline-block">Criar Pedido</span>
-                </Button>
+          <div className="w-full flex justify-end items-center mt-4 md:mt-0 md:mr-4 space-x-2">
+                <div className="hidden sm:flex flex-grow justify-end pr-4">
+                  <Button size="lg" onClick={abrirModalPedido}>
+                    <FaPlusCircle className='w-4 h-4 mr-2' />
+                    <span className="hidden md:inline-block">Criar Pedido</span>
+                  </Button>
+                </div>
+                <ModalPedido open={ModalAberta} onClose={fecharModalPedido} />
+                <div className="sm:hidden flex-grow justify-end pr-4">
+                  <Button size="sm" onClick={abrirModalPedido}>
+                    <FaPlusCircle className='w-4 h-4 mr-2' />
+                  </Button>
+                </div>
               </div>
-              <div className="sm:hidden flex-grow justify-end pr-4">
-                <Button size="sm">
-                  <FaPlusCircle className='w-4 h-4 mr-2' />
-                </Button>
-              </div>
-            </div>
 
             <DropdownMenu>
               <DropdownMenuContent align="end">
@@ -129,12 +143,12 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders }) => {
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" // Adiciona um efeito de hover suave
+                      className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" 
                     >
                       {row.getVisibleCells().map((cell, cellIndex) => (
                         <TableCell
                           key={cell.id}
-                          className={`border border-gray-300 py-2 pl-4 pr-4 ${cellIndex === 0 ? "border-l-0" : ""}`} // Ajusta a opacidade das bordas
+                          className={`border border-gray-300 py-2 pl-4 pr-4 ${cellIndex === 0 ? "border-l-0" : ""}`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,

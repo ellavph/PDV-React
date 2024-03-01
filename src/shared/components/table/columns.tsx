@@ -15,14 +15,15 @@ const handleEditOrder = (orderId: number) => {
   export const columns: ColumnDef<Order>[] = [
     { 
       accessorKey: "id", 
-      header: () => <div className="text-gray-800 font-bold text-center">ID</div>, 
-      cell: ({ row }) => <div className="w-16 mx-auto text-center">{row?.id}</div>
+      header: () => <div className="text-gray-800 font-bold text-center">Pedido</div>, 
+      cell: ({ row }) => <div className="text-center">{row?.id}</div>
     },
     { 
       accessorKey: "createdAt", 
-      header: () => <div className="text-gray-800 font-bold text-center">Hora Pedido</div>, 
+      header: () => <div className="text-gray-800 font-bold text-center">Data Solicitação</div>, 
       cell: ({ row }) => <div className="text-center"><DateTimeFormatter isoDateTime={String(row?.original?.createdAt)} /></div>
     },
+    
     { 
       accessorKey: "customer", 
       header: () => <div className="text-gray-800 font-bold text-center">Cliente</div>, 
@@ -32,6 +33,11 @@ const handleEditOrder = (orderId: number) => {
       accessorKey: "status", 
       header: () => <div className="text-gray-800 font-bold text-center">Status</div>, 
       cell: ({ row }) => <div className="text-center">Pago</div>
+    },
+    { 
+      accessorKey: "value", 
+      header: () => <div className="text-gray-800 font-bold text-center">Valor</div>, 
+      cell: ({ row }) => <div className="text-center">R$ 24.98</div>
     },
     {
       id: "actions",

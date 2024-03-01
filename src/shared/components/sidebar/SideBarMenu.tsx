@@ -16,6 +16,12 @@ function App() {
     setIsSidebarOpen(false);
   };
 
+  const buttonLogou = () => {
+    localStorage.removeItem('token')
+    // Redirecionar para a página inicial
+    window.location.href = '/'; // ou a rota que leva para a home
+  };
+
   return (
     <div className={`body ${isDarkMode ? 'dark' : ''}`}>
       <div className="fixed w-full z-30 flex bg-zinc-800 dark:bg-zinc-900 p-2 items-center justify-center h-16 px-10">
@@ -29,16 +35,16 @@ function App() {
         <div className="grow h-full flex items-center justify-center"></div>
         <div className="flex-none h-full text-center flex items-center justify-center">
           <div className="flex space-x-3 items-center px-3">
-            <div className="hidden md:block text-sm md:text-md text-black dark:text-white">John Doe</div>
+            <button className="px-6 py-1 text-white hover:bg-zinc-600 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110" onClick={buttonLogou}>Logout</button>
           </div>
         </div>
       </div>
-      <div className="pt-16"> {/* Adicionando padding-top igual à altura do cabeçalho */}
-        <aside className={`w-60 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-60'} fixed transition-transform ease-in-out duration-300 z-50 flex h-screen bg-[#1E293B] `}>
-          <div className="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition-transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#1E293B]  absolute top-2 rounded-full h-12">
+      <div className="pt-16">
+        <aside className={`w-60 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-60'} fixed transition-transform ease-in-out duration-300 z-50 flex h-screen bg-zinc-800 `}>
+          <div className="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition-transform ease-in duration-300 flex items-center justify-between border-4 border-zinc-700 dark:border-[#0F172A] bg-zinc-900 absolute top-2 rounded-full h-12">
             <div className="flex pl-4 items-center space-x-2 ">
               <div>
-                <div onClick={toggleDarkMode} className={`moon text-white hover:text-blue-500 ${isDarkMode ? 'hidden' : ''}`}>
+                <div onClick={toggleDarkMode} className={`moon text-white hover:text-blue-900 ${isDarkMode ? 'hidden' : ''}`}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                   </svg>
@@ -50,16 +56,24 @@ function App() {
                   </svg>
                 </div>
               </div>
-              <div className="text-sm md:text-md text-black dark:text-white">John Doe</div>
+              <div className="text-sm md:text-md text-black dark:text-white" onClick={buttonLogou}>John Doe</div>
             </div>
           </div>
           <nav className="mt-12 text-zinc-900">
-            <ul>
-              <li className="px-6 py-3 text-white hover:bg-zinc-300 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Dashboard</li>
-              <li className="px-6 py-3 text-white hover:bg-zinc-300 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Pedidos</li>
-              <li className="px-6 py-3 text-white hover:bg-zinc-300 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Produtos</li>
-              <li className="px-6 py-3 text-white hover:bg-zinc-300 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Clientes</li>
-            </ul>
+          <ul>
+            <li>
+              <button className="px-6 py-2 text-white hover:bg-zinc-600 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Dashboard</button>
+            </li>
+            <li>
+              <button className="px-6 py-2 text-white hover:bg-zinc-600 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Pedidos</button>
+            </li>
+            <li>
+              <button className="px-6 py-2 text-white hover:bg-zinc-600 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Produtos</button>
+            </li>
+            <li>
+              <button className="px-6 py-2 text-white hover:bg-zinc-600 dark:hover:bg-zinc-900 rounded-full transition-transform transform hover:scale-110">Clientes</button>
+            </li>
+          </ul>
           </nav>
         </aside>
         {isSidebarOpen && (
